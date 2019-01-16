@@ -13,20 +13,20 @@ namespace MerCado
 
         internal void Run()
         {
-            Console.WriteLine("Användarnamn:");
+            Console.WriteLine("Användarnamn:"); //Lägga inloggningen i en egen funktion. När man avslutar appen så hamnar man i inloggningen igen. 
             String UserId1 = Console.ReadLine();
             Console.WriteLine("Lösenord:");
 
-            Console.ForegroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Black; // Om man har annan bakgrund än svart i konsolen ser man lösenordet. Byta till att tecknen skrivs ut som * eller nått?
             string Pass = Console.ReadLine();
             Console.ResetColor();
 
 
-            String UserIdCorrect = "Mercado";
+            String UserIdCorrect = "Mercado"; // Lägg detta i en whiel loop så appen inte avslutas om man skriver fel användarnamn och lösenord.
             String PassCorrect = "Mercado1";
             int MaxAttempts = 3;
 
-
+            
 
             if (UserId1 != UserIdCorrect && Pass != PassCorrect)
             {
@@ -45,11 +45,11 @@ namespace MerCado
         {
             Header("Huvudmeny");
 
-            WriteLine("A) Personer");
+            WriteLine("A) Personer"); //Bra menyer!!
             WriteLine("B) Marknadsundersökningar");
             WriteLine("C) Företag");
             WriteLine();
-            WriteLine("D) Svara på undersökning");
+            WriteLine("D) Svara på undersökning");// Meny för att kolla på svar från undersökningar. 
 
             ConsoleKey command = Console.ReadKey(true).Key;
             switch (command)
@@ -148,7 +148,7 @@ namespace MerCado
             {
                 Write("Vilket kön har personen (female/male/other)? ");
                 string x = Console.ReadLine().ToLower();
-                if (x == "female" || x == "male" || x == "other")
+                if (x == "female" || x == "male" || x == "other") // Om man skriver fel ges information vad som skrivits fel.
                 {
                     gender = x;
                     break;
@@ -157,7 +157,7 @@ namespace MerCado
 
             Write("Var bor personen? ");
             string location = Console.ReadLine();
-            Write("Vad har personen för email? ");
+            Write("Vad har personen för email? "); // Validera att email är en riktig mail.
             string email = Console.ReadLine();
 
             dataAccess.CreatePerson(age, gender, location, email);
@@ -249,7 +249,7 @@ namespace MerCado
             {
                 try
                 {
-                    Write("Vilken person vill du ta bort? ");
+                    Write("Vilken person vill du ta bort? "); // information om att det är id som ska skrivas in.
                     personID = int.Parse(Console.ReadLine());
                     break;
                 }

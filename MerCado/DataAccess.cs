@@ -53,7 +53,7 @@ namespace MerCado
         internal void DeletePerson(int personID)
         {
             var sql = @"DELETE PERSON
-                           WHERE PersonID=@ID";
+                           WHERE PersonID=@ID"; // Om en person som svarat på undersökning tas bort funkar inte detta. Fler rader i andra tabeller som är kopplade till person måste tas bort.
 
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
@@ -64,7 +64,7 @@ namespace MerCado
             }
         }
 
-        class ParamValue
+        class ParamValue // Kan läggas i en egen fil.
         {
             public string Param { get; set; }
             public object Value { get; set; }
@@ -322,7 +322,7 @@ namespace MerCado
         internal void DeleteCompany(int companyID)
         {
             var sql = @"DELETE COMPANY
-                           WHERE CompanyID=@ID";
+                           WHERE CompanyID=@ID"; // Exception om man tar bort ett företag som är kopplat till andra tabeller.
 
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
