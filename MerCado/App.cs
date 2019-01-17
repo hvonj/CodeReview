@@ -21,7 +21,7 @@ namespace MerCado
         private void Inlogg()
         {
 
-            Console.WriteLine("Användarnamn:"); //Lägga inloggningen i en egen funktion. När man avslutar appen så hamnar man i inloggningen igen. 
+            Console.WriteLine("Användarnamn:"); //Lägga inloggningen i en egen funktion. När man avslutar appen så hamnar man i inloggningen igen.  FIX
             String UserId1 = Console.ReadLine();
             Console.WriteLine("Lösenord:");
 
@@ -30,7 +30,7 @@ namespace MerCado
             Console.ResetColor();
 
 
-            String UserIdCorrect = "Mercado"; // Lägg detta i en whiel loop så appen inte avslutas om man skriver fel användarnamn och lösenord.
+            String UserIdCorrect = "Mercado";
             String PassCorrect = "Mercado1";
             int MaxAttempts = 3;
 
