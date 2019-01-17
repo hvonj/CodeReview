@@ -53,7 +53,7 @@ namespace MerCado
         internal void DeletePerson(int personID)
         {
             var sql = @"DELETE PERSON
-                           WHERE PersonID=@ID"; // Om en person som svarat på undersökning tas bort funkar inte detta. Fler rader i andra tabeller som är kopplade till person måste tas bort.
+                           WHERE PersonID=@ID"; 
 
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
@@ -64,12 +64,7 @@ namespace MerCado
             }
         }
 
-        class ParamValue // Kan läggas i en egen fil.
-        {
-            public string Param { get; set; }
-            public object Value { get; set; }
-        }
-
+       
         internal List<Person> GetPersonOnCertainInput(int personID, int age, string gender, string location, string email)
         {
             string sql;
@@ -160,18 +155,6 @@ namespace MerCado
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
         internal void CreateSurvey(int companyId)
         {
 
@@ -184,11 +167,6 @@ namespace MerCado
                 connection.Open();
                 command.Parameters.Add(new SqlParameter("ID", companyId));
                 command.ExecuteNonQuery();
-
-
-
-
-
 
             }
 
@@ -224,11 +202,9 @@ namespace MerCado
 
                 while (reader.Read())
                 {
-                    //MarketResearch enk = new MarketResearch
 
                     x = reader.GetSqlInt32(0).Value;
                     y = reader.GetSqlString(1).Value;
-
 
 
                     researches.Add(x, y);
@@ -264,23 +240,6 @@ namespace MerCado
                 return researches;
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         public void CreateCompany(Company newpost)
         {
@@ -322,7 +281,7 @@ namespace MerCado
         internal void DeleteCompany(int companyID)
         {
             var sql = @"DELETE COMPANY
-                           WHERE CompanyID=@ID"; // Exception om man tar bort ett företag som är kopplat till andra tabeller.
+                           WHERE CompanyID=@ID"; 
 
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
@@ -387,20 +346,6 @@ namespace MerCado
                 return null;
             }
         }
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
 
         internal int CreateQuestion(string question, bool genericOrNot, int questionType)
         {
@@ -557,8 +502,6 @@ namespace MerCado
                 command.Parameters.Add(new SqlParameter("answer", answer));
 
                 command.ExecuteNonQuery();
-
-                //SqlDataReader reader = command.ExecuteReader();
 
             }
         }

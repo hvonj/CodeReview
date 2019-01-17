@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security;
 using System.Text;
+using System.Text.RegularExpressions;
 using MerCado.Domain;
 
 
@@ -13,6 +15,12 @@ namespace MerCado
 
         internal void Run()
         {
+            Inlogg();
+
+        }
+        private void Inlogg()
+        {
+
             Console.WriteLine("Användarnamn:"); //Lägga inloggningen i en egen funktion. När man avslutar appen så hamnar man i inloggningen igen. 
             String UserId1 = Console.ReadLine();
             Console.WriteLine("Lösenord:");
@@ -26,7 +34,7 @@ namespace MerCado
             String PassCorrect = "Mercado1";
             int MaxAttempts = 3;
 
-            
+
 
             if (UserId1 != UserIdCorrect && Pass != PassCorrect)
             {
@@ -41,11 +49,12 @@ namespace MerCado
 
         }
 
+
         private void PageMainMenu()
         {
             Header("Huvudmeny");
 
-            WriteLine("A) Personer"); //Bra menyer!!
+            WriteLine("A) Personer"); 
             WriteLine("B) Marknadsundersökningar");
             WriteLine("C) Företag");
             WriteLine();
@@ -72,15 +81,6 @@ namespace MerCado
             }
 
         }
-
-
-
-
-
-
-
-
-
 
         private void PagePersons()
         {
@@ -148,17 +148,31 @@ namespace MerCado
             {
                 Write("Vilket kön har personen (female/male/other)? ");
                 string x = Console.ReadLine().ToLower();
-                if (x == "female" || x == "male" || x == "other") // Om man skriver fel ges information vad som skrivits fel.
+                if (x == "female" || x == "male" || x == "other") // Om man skriver fel ges information vad som skrivits fel. FIX
                 {
                     gender = x;
                     break;
                 }
+                Console.WriteLine("Ange 'female', 'male' eller 'other'. ");
             }
 
             Write("Var bor personen? ");
             string location = Console.ReadLine();
-            Write("Vad har personen för email? "); // Validera att email är en riktig mail.
-            string email = Console.ReadLine();
+
+            string email;
+
+            while (true)
+            {
+                Write("Vad har personen för email? "); // Validera att email är en riktig mail. FIX
+                email = Console.ReadLine();
+                Match match = Regex.Match(email, @".+@.+\..+");
+                if (match.Success)
+                {
+                    break;
+                }
+                Console.WriteLine("Du måste ange en giltig emailadress! ");
+            }
+           
 
             dataAccess.CreatePerson(age, gender, location, email);
 
@@ -249,7 +263,7 @@ namespace MerCado
             {
                 try
                 {
-                    Write("Vilken person vill du ta bort? "); // information om att det är id som ska skrivas in.
+                    Write("Välj Id på den person du vill ta bort. "); // information om att det är id som ska skrivas in. FIX
                     personID = int.Parse(Console.ReadLine());
                     break;
                 }
@@ -400,21 +414,6 @@ namespace MerCado
             Console.ReadKey();
             PageMainMenu();
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         private void PageResearches()
         {
@@ -624,24 +623,6 @@ namespace MerCado
             PageMainMenu();
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         private void PageCompanies()
         {
             Header("Företag");
@@ -806,16 +787,6 @@ namespace MerCado
             PageMainMenu();
         }
 
-
-
-
-
-
-
-
-
-
-
         private void PageAnswerQuestions()
         {
             Header("Svara på marknadsundersökning ");
@@ -869,17 +840,6 @@ namespace MerCado
             Console.ReadKey();
             PageMainMenu();
         }
-
-
-
-
-
-
-
-
-
-
-
 
         private void ShowAllSurveys()
         {
