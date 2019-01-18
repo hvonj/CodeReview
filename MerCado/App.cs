@@ -21,31 +21,68 @@ namespace MerCado
         private void Inlogg()
         {
 
-            Console.WriteLine("Användarnamn:"); //Lägga inloggningen i en egen funktion. När man avslutar appen så hamnar man i inloggningen igen.  FIX
+            WriteLine("Användarnamn:"); //Lägga inloggningen i en egen funktion. När man avslutar appen så hamnar man i inloggningen igen.  FIX
             String UserId1 = Console.ReadLine();
-            Console.WriteLine("Lösenord:");
 
-            Console.ForegroundColor = ConsoleColor.Black; // Om man har annan bakgrund än svart i konsolen ser man lösenordet. Byta till att tecknen skrivs ut som * eller nått?
-            string Pass = Console.ReadLine();
-            Console.ResetColor();
-
-
-            String UserIdCorrect = "Mercado";
-            String PassCorrect = "Mercado1";
-            int MaxAttempts = 3;
-
-
-
-            if (UserId1 != UserIdCorrect && Pass != PassCorrect)
+            WriteLine("Ange lösenord: "); // Om man har annan bakgrund än svart i konsolen ser man lösenordet. Byta till att tecknen skrivs ut som * eller nått?
+            string pass = "";
+            do
             {
-                MaxAttempts++;
-            }
-            else
-            {
-                PageMainMenu();
-            }
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                {
+                    pass += key.KeyChar;
+                    Write("*");
+                }
+                else
+                {
+                    if (key.Key == ConsoleKey.Backspace && pass.Length > 0)
+                    {
+                        pass = pass.Substring(0, (pass.Length - 1));
+                        Write("\b \b");
+                    }
+                    else if (key.Key == ConsoleKey.Enter)
+                    {
+                        if (pass == "Mercado1" && UserId1 == "Mercado")
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            WriteLine(" Fel, ange rätt lösenord och användarnamn annars blir du bannad din fillidutt!");
+                            Console.ResetColor();
+                            pass = "";
+                        }
+                    }
+                }
+            } while (true);
 
-            Console.ReadKey();
+            PageMainMenu();
+
+            
+            //Console.WriteLine("Lösenord:");
+
+            //Console.ForegroundColor = ConsoleColor.Black; // Om man har annan bakgrund än svart i konsolen ser man lösenordet. Byta till att tecknen skrivs ut som * eller nått?
+            //string Pass = Console.ReadLine();
+            //Console.ResetColor();
+
+
+            //String PassCorrect = "Mercado1";
+            //int MaxAttempts = 3;
+
+
+
+            //if (UserId1 != UserIdCorrect && Pass != PassCorrect)
+            //{
+            //    MaxAttempts++;
+            //}
+            //else
+            //{
+            //    PageMainMenu();
+            //}
+
+            //Console.ReadKey();
 
         }
 
@@ -238,8 +275,19 @@ namespace MerCado
 
             Write("Vilken ny plats vill du ändra till? ");
             string location = Console.ReadLine();
-            Write("Vilken ny email vill du ändra till? ");
-            string email = Console.ReadLine();
+
+            string email;
+            while (true)
+            {
+                Write("Vilken ny email vill du ändra till? "); // Validera att email är en riktig mail. FIX
+                email = Console.ReadLine();
+                Match match = Regex.Match(email, @".+@.+\..+");
+                if (match.Success)
+                {
+                    break;
+                }
+                Console.WriteLine("Du måste ange en giltig emailadress! ");
+            }
 
             dataAccess.ChangePerson(personID, age, gender, location, email);
 
